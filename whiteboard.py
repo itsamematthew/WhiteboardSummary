@@ -4,18 +4,6 @@ from openai import OpenAI
 from PIL import Image
 from io import BytesIO
 import base64
-from fpdf import FPDF
-
-# Function to create a PDF file from text
-def create_pdf(text):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size = 12)
-    pdf.multi_cell(0, 10, text)
-    pdf_output = BytesIO()
-    pdf.output(pdf_output, 'F')
-    pdf_output.seek(0)
-    return pdf_output
 
 # Streamlit app layout
 st.title("Whiteboard Summary App")
@@ -78,13 +66,5 @@ if api_key:
             mime="text/plain"
         )
 
-        # Export as .pdf
-        pdf_file = create_pdf(summary)
-        st.download_button(
-            label="Download Summary as PDF",
-            data=pdf_file,
-            file_name="whiteboard_summary.pdf",
-            mime="application/pdf"
-        )
 else:
     st.warning("Please enter your OpenAI API key to proceed.")
